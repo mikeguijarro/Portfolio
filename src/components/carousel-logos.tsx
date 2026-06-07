@@ -19,10 +19,10 @@ type logo = {
 
 const logosArr: logo[] = [
     {
-        key: 'dartcom',
-        src: '/dartcom.svg',
-        alt: 'Logo Dartcom',
-        width: 200,
+        key: 'amazon',
+        src: '/amazon.svg',
+        alt: 'Logo Amazon',
+        width: 100,
         height: 100,
     },
     {
@@ -34,7 +34,7 @@ const logosArr: logo[] = [
     },
     {
         key: 'climateai',
-        src: '/climateai.png',
+        src: '/climateai.svg',
         alt: 'Logo Climate Ai',
         width: 200,
         height: 100,
@@ -46,7 +46,6 @@ const logosArr: logo[] = [
         width: 200,
         height: 100,
     },
-
 ]
 
 export const CarouselLogos = () => {

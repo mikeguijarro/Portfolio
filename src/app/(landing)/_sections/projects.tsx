@@ -5,111 +5,36 @@ import { IProjectGridItem } from "../types";
 export function ProjectsSection() {
     const items: IProjectGridItem[] = [
         {
-            id: 'a_1',
-            layout: { i: "a_1", x: 0, y: 0, w: 3, h: 2 },
-            type: 'square_1x1',
+            id: 'a',
+            layout: { i: "a", x: 0, y: 0, w: 3, h: 2 },
+            type: 'rectangle_4_2',
             data: {
                 type: 'video',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/demo-dartcom.mp4',
-                href: 'https://github.com/Dartcom-Solutions',
+                src: 'https://dh4coajsj2ptp.cloudfront.net/dartcom_demo.mp4',
                 title: 'Talk to your databases with AI'
             }
         },
         {
-            id: 'h_2',
-            layout: { i: "h_2", x: 3, y: 0, w: 1, h: 2 },
-            type: 'square_1x1',
-            data: {
-                type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/takeout.png',
-                href: 'https://www.figma.com/design/YI9t7velfcrJDfGktIUUhw/Design-System-Pickup!?node-id=406-524&t=TSGsMmTOhSGHwsp5-1',
-                title: 'Takeout design',
-                alt: 'Design mockup for the Takeout project'
-            }
-        },
-        {
-            id: 'g_3',
-            layout: { i: "g_3", x: 1, y: 13, w: 2, h: 2 },
-            type: 'square_1x1',
-            data: {
-                type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/datadrive_1.png',
-                href: 'https://github.com/MIKEGUIJARRO/DataDriveBackend?tab=readme-ov-file',
-                title: 'Templating engine for google docs',
-                alt: 'Screenshot of the DataDrive templating engine for Google Docs'
-            }
-        },
-        {
-            id: 'c_4',
-            layout: { i: "c_4", x: 0, y: 4, w: 1, h: 1 },
-            type: 'square_1x1',
-            data: {
-                type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/merkadito.png',
-                href: 'https://github.com/MIKEGUIJARRO/Merkadito',
-                title: 'Bodega landing',
-                alt: 'Landing page design for Merkadito'
-            }
-        },
-        {
-            id: 'f_5',
-            layout: { i: "f_5", x: 2, y: 4, w: 1, h: 1 },
-            type: 'square_1x1',
-            data: {
-                type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/old_portfolio_1.png',
-                href: 'https://github.com/MIKEGUIJARRO/Portfolio',
-                title: 'My old portfolio',
-                alt: 'Screenshot of Miguel\'s old portfolio website'
-            }
-        },
-        {
             id: 'b',
-            layout: { i: "b", x: 1, y: 5, w: 1, h: 1 },
+            layout: { i: "b", x: 3, y: 0, w: 1, h: 2 },
             type: 'square_1x1',
             data: {
                 type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/blog.png',
-                href: 'https://github.com/MIKEGUIJARRO/BlogApp',
-                title: 'Networking blog',
-                alt: 'Screenshot of Miguel\'s networking blog'
+                src: 'https://dh4coajsj2ptp.cloudfront.net/758AF948-A8DF-4ECD-8D61-7DCA3E0F464E.jpeg',
+                title: 'Architected SmartOps microservices from scratch',
+                alt: 'C4 design for microservices architecture'
             }
         },
         {
-            id: 'e',
-            layout: { i: "e", x: 0, y: 7, w: 1, h: 2 },
-            type: 'square_1x1',
-            data: {
-                type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/my_shop_3.png',
-                href: 'https://github.com/MIKEGUIJARRO/ShopApp',
-                title: 'Ecommerce app',
-                alt: 'Screenshot of Miguel\'s ecommerce app'
-            }
-        },
-        {
-            id: 'd',
-            layout: { i: "d", x: 3, y: 12, w: 1, h: 1 },
-            type: 'square_1x1',
-            data: {
-                type: 'image',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/my_box_2.png',
-                href: 'https://github.com/MIKEGUIJARRO/MyBox',
-                title: 'Shipping dashboard',
-                alt: 'Screenshot of the MyBox shipping dashboard'
-            },
-        },
-        {
-            id: 'i',
-            layout: { i: "i", x: 1, y: 2, w: 3, h: 2 },
-            type: 'square_1x1',
+            id: 'c',
+            layout: { i: "c", x: 1, y: 13, w: 3, h: 2 },
+            type: 'rectangle_4_2',
             data: {
                 type: 'video',
-                src: 'https://d29p8yz5fxctco.cloudfront.net/assets/projects/recluta.mp4',
-                href: 'https://github.com/MIKEGUIJARRO/ReclutaClient',
-                title: 'Hiring platform',
-            },
-        }
+                src: 'https://dh4coajsj2ptp.cloudfront.net/building_technical_excellence.mp4',
+                title: 'Building technical excellence at AWS',
+            }
+        },
     ]
     return (
         <div>

@@ -22,6 +22,7 @@ export function withLink<P extends {}>(
                         href={href}
                         target={target}
                         onMouseDown={(e) => { e.stopPropagation() }}
+                        onTouchStart={(e) => { e.stopPropagation() }}
                         className={cn(buttonVariants({ variant: 'outline', size: 'icon' }), 'rounded-full bg-white/80 backdrop-blur-lg transition-all')}>
                         <ArrowUpRight />
                     </Link>
