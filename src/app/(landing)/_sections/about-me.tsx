@@ -52,6 +52,18 @@ export function AboutMeSection() {
                 title: 'Running a production-grade home lab 24/7'
             }
         },
+        {
+            id: 'e',
+            layout: { i: "e", x: 4, y: 0, w: 1, h: 2 },
+            type: 'column_1x2',
+            data: {
+                type: 'image',
+                alt: 'Miguel Guijarro building in public',
+                src: 'https://dh4coajsj2ptp.cloudfront.net/shout-out-amazon.png',
+                href: '',
+                title: 'Focused on delivering results'
+            }
+        },
     ]
     return (
         <div>
