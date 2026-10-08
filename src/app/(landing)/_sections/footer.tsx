@@ -66,6 +66,9 @@ export function FooterSection() {
                     <span>mikeguijarrodev@gmail.com</span>
                 </Button>
             </div>
+            <p className="text-center text-sm text-slate-400 pt-10">
+                © {new Date().getFullYear()} Miguel Alejandro Guijarro Martinez. All rights reserved.
+            </p>
         </div>
     )
 }
