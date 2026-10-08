@@ -10,8 +10,9 @@ export function ProjectsSection() {
             type: 'rectangle_4_2',
             data: {
                 type: 'video',
-                src: 'https://dh4coajsj2ptp.cloudfront.net/dartcom_demo.mp4',
-                title: 'Talk to your databases with AI'
+                src: 'https://dh4coajsj2ptp.cloudfront.net/sat-ai.mp4',
+                href: 'https://github.com/mikeguijarro/sat-ai',
+                title: 'AI agent that checks SAT appointment availability',
             }
         },
         {
@@ -27,12 +28,22 @@ export function ProjectsSection() {
         },
         {
             id: 'c',
-            layout: { i: "c", x: 1, y: 13, w: 3, h: 2 },
+            layout: { i: "c", x: 1, y: 2, w: 3, h: 2 },
             type: 'rectangle_4_2',
             data: {
                 type: 'video',
                 src: 'https://dh4coajsj2ptp.cloudfront.net/building_technical_excellence.mp4',
                 title: 'Building technical excellence at AWS',
+            }
+        },
+        {
+            id: 'd',
+            layout: { i: "d", x: 0, y: 4, w: 3, h: 2 },
+            type: 'rectangle_4_2',
+            data: {
+                type: 'video',
+                src: 'https://dh4coajsj2ptp.cloudfront.net/dartcom_demo.mp4',
+                title: 'Talk to your databases with AI'
             }
         },
     ]
