@@ -13,8 +13,13 @@ config.autoAddCss = false
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mike Guijarro",
-  description: "Portfolio of Mike Guijarro",
+  title: "Miguel Guijarro | SRE & DevOps Engineer",
+  description: "SRE and DevOps engineer with nearly two years at Amazon (AWS and Kindle). Kubernetes, AWS, Terraform and production incident response.",
+  openGraph: {
+    title: "Miguel Guijarro | SRE & DevOps Engineer",
+    description: "SRE and DevOps engineer with nearly two years at Amazon (AWS and Kindle). Kubernetes, AWS, Terraform and production incident response.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

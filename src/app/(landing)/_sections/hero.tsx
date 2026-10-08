@@ -24,7 +24,7 @@ const socialLinks = [
     { href: 'https://x.com/mikeguijarro', icon: faXTwitter, label: 'X' },
 ]
 
-const techBadges = ['AWS', 'Kubernetes', 'Docker', 'TypeScript', 'Linux']
+const techBadges = ['AWS', 'Kubernetes', 'Terraform', 'Docker', 'Linux']
 
 export function HeroSection() {
     return (
@@ -59,14 +59,14 @@ export function HeroSection() {
                 className="space-y-6 w-full max-w-lg text-center lg:text-start">
                 <motion.div variants={itemVariants}>
                     <p className="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-3">
-                        Systems Developer → Site Reliability Engineer
+                        SRE / DevOps Engineer
                     </p>
                     <h1 className="text-6xl lg:text-8xl font-bold uppercase leading-none">
                         Miguel<br />Guijarro
                     </h1>
                 </motion.div>
                 <motion.p variants={itemVariants} className="text-lg text-slate-600 leading-relaxed">
-                    Passionate about infrastructure automation, observability, and platform engineering.
+                    Nearly two years at Amazon resolving EKS and ECS production incidents and owning the infrastructure behind Kindle&apos;s print publishing. US and Mexican citizen, open to US-remote SRE and DevOps roles.
                 </motion.p>
 
                 <motion.div variants={itemVariants} className="flex flex-wrap gap-2 justify-center lg:justify-start">

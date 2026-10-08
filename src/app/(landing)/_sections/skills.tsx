@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, Variants } from "framer-motion"
-import { Server, Activity, Code2, GitBranch } from "lucide-react"
+import { Server, Boxes, Activity, Code2, GitBranch, Bot } from "lucide-react"
 
 const containerVariants: Variants = {
     hidden: {},
@@ -17,7 +17,12 @@ const categories = [
     {
         label: "Infrastructure & Cloud",
         icon: Server,
-        skills: ["AWS", "Kubernetes", "Docker", "Linux"],
+        skills: ["AWS", "Linux", "Proxmox VE", "Terraform / OpenTofu"],
+    },
+    {
+        label: "Containers & Orchestration",
+        icon: Boxes,
+        skills: ["Kubernetes (EKS, Talos)", "ECS", "Docker", "Helm"],
     },
     {
         label: "Observability",
@@ -30,9 +35,14 @@ const categories = [
         skills: ["Python", "TypeScript", "Java", "Bash", "SQL"],
     },
     {
-        label: "CI/CD & Automation",
+        label: "CI/CD",
         icon: GitBranch,
         skills: ["GitHub Actions", "ArgoCD"],
+    },
+    {
+        label: "AI & Automation",
+        icon: Bot,
+        skills: ["Mastra", "Multi-agent workflows", "LLM evals & observability"],
     },
 ]
 

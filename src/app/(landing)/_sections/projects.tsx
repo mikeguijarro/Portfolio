@@ -6,18 +6,18 @@ export function ProjectsSection() {
     const items: IProjectGridItem[] = [
         {
             id: 'a',
-            layout: { i: "a", x: 0, y: 0, w: 3, h: 2 },
-            type: 'rectangle_4_2',
+            layout: { i: "a", x: 0, y: 0, w: 1, h: 2 },
+            type: 'column_1x2',
             data: {
-                type: 'video',
-                src: 'https://dh4coajsj2ptp.cloudfront.net/sat-ai.mp4',
-                href: 'https://github.com/mikeguijarro/sat-ai',
-                title: 'AI agent that checks SAT appointment availability',
+                type: 'image',
+                src: 'https://dh4coajsj2ptp.cloudfront.net/IMG_0805.jpeg',
+                title: '6-node Talos Kubernetes lab on bare-metal Proxmox, built with Terraform',
+                alt: 'Home lab running the Kubernetes cluster'
             }
         },
         {
             id: 'b',
-            layout: { i: "b", x: 3, y: 0, w: 1, h: 2 },
+            layout: { i: "b", x: 3, y: 2, w: 1, h: 2 },
             type: 'square_1x1',
             data: {
                 type: 'image',
@@ -28,7 +28,18 @@ export function ProjectsSection() {
         },
         {
             id: 'c',
-            layout: { i: "c", x: 1, y: 2, w: 3, h: 2 },
+            layout: { i: "c", x: 0, y: 4, w: 1, h: 2 },
+            type: 'column_1x2',
+            data: {
+                type: 'image',
+                src: 'https://dh4coajsj2ptp.cloudfront.net/shout-out-amazon.png',
+                title: 'Amazon shout-out: fix built 3 weeks before a defect reached 300+ publishers',
+                alt: 'Shout-out received at Amazon'
+            }
+        },
+        {
+            id: 'd',
+            layout: { i: "d", x: 1, y: 0, w: 3, h: 2 },
             type: 'rectangle_4_2',
             data: {
                 type: 'video',
@@ -37,8 +48,19 @@ export function ProjectsSection() {
             }
         },
         {
-            id: 'd',
-            layout: { i: "d", x: 0, y: 4, w: 3, h: 2 },
+            id: 'e',
+            layout: { i: "e", x: 0, y: 2, w: 3, h: 2 },
+            type: 'rectangle_4_2',
+            data: {
+                type: 'video',
+                src: 'https://dh4coajsj2ptp.cloudfront.net/sat-ai.mp4',
+                href: 'https://github.com/mikeguijarro/sat-ai',
+                title: 'AI agent that checks appointment availability at Mexico\'s tax authority (SAT)',
+            }
+        },
+        {
+            id: 'f',
+            layout: { i: "f", x: 1, y: 4, w: 3, h: 2 },
             type: 'rectangle_4_2',
             data: {
                 type: 'video',
@@ -49,7 +71,7 @@ export function ProjectsSection() {
     ]
     return (
         <div>
-            <h2 className="font-bold text-6xl ml-6 mb-4">Personal projects</h2>
+            <h2 className="font-bold text-6xl ml-6 mb-4">Projects</h2>
             <Grid items={items} GridContent={GridContentWrapper} />
         </div>
     )

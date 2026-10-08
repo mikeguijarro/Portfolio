@@ -51,7 +51,7 @@ const logosArr: logo[] = [
 export const CarouselLogos = () => {
     return (
         <div className="space-y-24">
-            <p className="text-center font-semibold text-xl">Built software / deployed infrastructure at</p>
+            <p className="text-center font-semibold text-xl">Worked and studied at</p>
             <Carousel
                 opts={{
                     loop: true,
