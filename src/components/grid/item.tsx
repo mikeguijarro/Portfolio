@@ -20,7 +20,7 @@ export const GridItem = React.forwardRef<HTMLDivElement, IGridItemProps>(({ styl
             onTouchEnd={onTouchEnd}
             className={cn(className)}
             {...props}>
-            <div className={`w-full h-full hover:cursor-grab transition-all duration-200 ${isDragging && 'scale-[1.10]'}`}>
+            <div className={cn('h-full w-full transition-transform duration-300 ease-out-expo hover:cursor-grab', isDragging && 'scale-[1.02] cursor-grabbing')}>
                 {children}
             </div>
         </div>

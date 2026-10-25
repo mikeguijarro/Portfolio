@@ -1,3 +1,383 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Tokens from DESIGN.md, stored as RGB channels so Tailwind opacity modifiers work (bg-ink/10). */
+@layer base {
+  :root {
+    --paper: 245 246 247;
+    --surface: 255 255 255;
+    --ink: 17 20 24;
+    --muted: 91 100 112;
+    --rule: 202 208 215;
+    --accent: 30 74 138;
+    --status: 47 133 90;
+    /* Primary button: navy in light mode, inverted ink in dark mode. */
+    --primary: 35 57 91;
+    --on-primary: 245 246 247;
+
+    /* Shorter screens pull the hero up so the proof strip stays in the first view. */
+    --content-start: clamp(128px, 15vh, 200px);
+
+    /* Newsreader weights per role; dark mode eases them because light-on-dark reads heavier. */
+    --w-display: 340;
+    --w-h1: 360;
+    --w-h2: 380;
+    --w-lead: 400;
+    --w-metric: 350;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --paper: 14 17 20;
+      --surface: 23 29 35;
+      --ink: 232 235 238;
+      --muted: 139 149 161;
+      --rule: 46 54 64;
+      --accent: 157 184 227;
+      --status: 95 211 154;
+      --primary: 232 235 238;
+      --on-primary: 14 17 20;
+      --w-display: 320;
+      --w-h1: 340;
+      --w-h2: 360;
+      --w-lead: 380;
+      --w-metric: 330;
+      color-scheme: dark;
+    }
+  }
+
+  :root.dark {
+    --paper: 14 17 20;
+    --surface: 23 29 35;
+    --ink: 232 235 238;
+    --muted: 139 149 161;
+    --rule: 46 54 64;
+    --accent: 157 184 227;
+    --status: 95 211 154;
+    --primary: 232 235 238;
+    --on-primary: 14 17 20;
+    --w-display: 320;
+    --w-h1: 340;
+    --w-h2: 360;
+    --w-lead: 380;
+    --w-metric: 330;
+    color-scheme: dark;
+  }
+
+  html {
+    @apply bg-paper text-ink;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-kerning: normal;
+    font-synthesis: none;
+    /* Reserve the scrollbar's space so locking scroll (the lightbox) doesn't shift the page. */
+    scrollbar-gutter: stable;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply font-sans text-body;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.16);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p, dt, dd, li, figcaption {
+    text-wrap: pretty;
+  }
+
+  [id] {
+    scroll-margin-top: 48px;
+  }
+}
+
+@layer components {
+  /* Serif type scale (DESIGN.md). Kept as component classes rather than Tailwind fontSize
+     tokens, so tailwind-merge never mistakes them for text colours inside cn(). */
+  .type-display,
+  .type-statement,
+  .type-h1,
+  .type-h2,
+  .type-h3,
+  .type-lead,
+  .type-metric {
+    font-family: var(--font-serif), Georgia, serif;
+    font-optical-sizing: auto;
+  }
+
+  .type-display {
+    font-size: clamp(4.5rem, 2.6rem + 6vw, 8rem);
+    /* 1.04 keeps the "g" of Miguel clear of the dots in Guijarro. */
+    line-height: 1.04;
+    letter-spacing: -0.028em;
+    font-weight: var(--w-display);
+  }
+
+  /* The hero sentence: a full-sentence headline in the display's light cut. */
+  .type-statement {
+    font-size: clamp(2.75rem, 1.6rem + 3.6vw, 4.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    font-weight: var(--w-display);
+  }
+
+  .type-h1 {
+    font-size: clamp(2.5rem, 1.75rem + 2.5vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    font-weight: var(--w-h1);
+  }
+
+  .type-h2 {
+    font-size: clamp(2rem, 1.55rem + 1.4vw, 2.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: var(--w-h2);
+  }
+
+  .type-h3 {
+    font-size: clamp(1.375rem, 1.3rem + 0.3vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 450;
+  }
+
+  .type-lead {
+    font-size: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    font-weight: var(--w-lead);
+  }
+
+  .type-metric {
+    font-size: clamp(2.25rem, 1.9rem + 1.25vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-weight: var(--w-metric);
+    font-variant-numeric: lining-nums proportional-nums;
+  }
+
+  .text-label {
+    @apply font-mono text-xs font-medium uppercase leading-[1.4] tracking-[0.08em] text-muted;
+  }
+
+  /* Square media with an inset hairline instead of a shadow. */
+  .media-frame {
+    @apply relative overflow-hidden bg-surface;
+  }
+
+  .media-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgb(var(--rule));
+  }
+
+  /* In dark mode, photos and videos dim slightly so bright screenshots don't glare against
+     the paper; hovering the tile restores full brightness. */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) .media-frame :is(img, video) {
+      filter: brightness(0.88);
+      transition: filter 500ms ease-out, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    :root:not(.light) figure:hover .media-frame :is(img, video) {
+      filter: none;
+    }
+  }
+
+  :root.dark .media-frame :is(img, video) {
+    filter: brightness(0.88);
+    transition: filter 500ms ease-out, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :root.dark figure:hover .media-frame :is(img, video) {
+    filter: none;
+  }
+
+  /* Gradient panels for the typographic tiles, after rachelchen.tech's project images: a soft
+     mesh of radial washes with a fine grain. Each tone carries its own ink, so the panel reads
+     the same in both themes, like a photo. */
+  .gradient-apricot {
+    --panel-ink: 42 27 18;
+    background-color: #e8b07a;
+    background-image:
+      radial-gradient(55% 75% at 12% 92%, #d8b6cc 0%, rgb(216 182 204 / 0) 62%),
+      radial-gradient(50% 65% at 92% 10%, #c9b6d4 0%, rgb(201 182 212 / 0) 60%),
+      radial-gradient(45% 60% at 88% 72%, #f0c2bf 0%, rgb(240 194 191 / 0) 64%),
+      radial-gradient(65% 80% at 42% 38%, #eaa86c 0%, rgb(234 168 108 / 0) 70%),
+      linear-gradient(118deg, #e9b47c 0%, #e6a872 48%, #ebc0a9 100%);
+  }
+
+  .gradient-periwinkle {
+    --panel-ink: 18 26 51;
+    background-color: #a8b6e6;
+    background-image:
+      radial-gradient(60% 70% at 10% 12%, #cdbdea 0%, rgb(205 189 234 / 0) 62%),
+      radial-gradient(55% 75% at 92% 88%, #7f9be0 0%, rgb(127 155 224 / 0) 64%),
+      radial-gradient(40% 55% at 78% 22%, #e7c9e0 0%, rgb(231 201 224 / 0) 62%),
+      radial-gradient(70% 80% at 40% 60%, #9fb2ea 0%, rgb(159 178 234 / 0) 70%),
+      linear-gradient(140deg, #b9c0ec 0%, #9eb0e6 52%, #8ea6e2 100%);
+  }
+
+  .panel-grain {
+    opacity: 0.14;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) .gradient-layer {
+      filter: brightness(0.9);
+    }
+  }
+
+  :root.dark .gradient-layer {
+    filter: brightness(0.9);
+  }
+
+  /* Show content for one theme only (the theme toggle's label and icon). Same conditions as
+     the token blocks above: an explicit class wins, otherwise the system setting decides. */
+  .when-dark {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) .when-dark {
+      display: revert;
+    }
+
+    :root:not(.light) .when-light {
+      display: none;
+    }
+  }
+
+  :root.dark .when-dark {
+    display: revert;
+  }
+
+  :root.dark .when-light {
+    display: none;
+  }
+
+  .link-quiet {
+    @apply underline decoration-rule decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-accent;
+  }
+
+  /* Hero load sequence: the page's one orchestrated moment. */
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+
+  .reveal-line > span {
+    display: inline-block;
+    animation: line-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  .settle {
+    animation: settle 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  .status-dot {
+    @apply relative inline-block h-2 w-2 shrink-0 rounded-full bg-status;
+  }
+
+  /* Only the persistent availability dot pulses. */
+  .status-dot-live::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgb(var(--status));
+    animation: status-pulse 2.4s ease-out infinite;
+  }
+
+  .logo-mark {
+    filter: grayscale(1);
+    opacity: 0.6;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) .logo-mark {
+      filter: grayscale(1) invert(1);
+    }
+  }
+
+  :root.dark .logo-mark {
+    filter: grayscale(1) invert(1);
+  }
+}
+
+@keyframes line-rise {
+  from { transform: translate3d(0, 108%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes settle {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Lightbox (components/cards/lightbox.tsx): fades in over 200ms and out over 160ms. allow-discrete keeps
+   the closed dialog in the top layer while it fades; lightbox.tsx waits 160ms before unmounting.
+   Browsers without overlay/allow-discrete support (Firefox today) just close instantly. */
+.lightbox {
+  opacity: 0;
+  transition:
+    opacity 160ms ease-in,
+    overlay 160ms ease-in allow-discrete,
+    display 160ms ease-in allow-discrete;
+}
+
+.lightbox[open] {
+  opacity: 1;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+
+@starting-style {
+  .lightbox[open] {
+    opacity: 0;
+  }
+}
+
+@keyframes status-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  70%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line > span,
+  .settle,
+  .status-dot-live::after {
+    animation: none;
+  }
+
+  .lightbox {
+    transition: none;
+  }
+}

@@ -24,18 +24,25 @@ export const TooltipCard: FC<ITooltipCardProps> = ({ children }) => {
     return (
         <TooltipProvider>
             <Tooltip delayDuration={1600}>
-                <TooltipTrigger asChild>
-                    <div className="w-full h-full">
+                {/* Radix skips its own handler when ours calls preventDefault:
+                    - focus: keyboard users can't drag, and a tooltip opened by focus inside the
+                      lightbox swallowed the first Esc (Radix cancels Escape while it's open).
+                    - pointer over a button or link: don't compete with the expand/link controls. */}
+                <TooltipTrigger
+                    asChild
+                    onFocus={(e) => { e.preventDefault() }}
+                    onPointerMove={(e) => {
+                        if ((e.target as HTMLElement).closest('button, a')) {
+                            e.preventDefault()
+                        }
+                    }}>
+                    <div className="h-full w-full">
                         {children}
                     </div>
                 </TooltipTrigger>
-                <TooltipContent>
-                </TooltipContent>
                 {portalElement && createPortal((
                     <TooltipContent>
-                        <p className='text-lg'>
-                            Grab me around! ✋
-                        </p>
+                        Drag to rearrange
                     </TooltipContent>
                 ), portalElement)
                 }

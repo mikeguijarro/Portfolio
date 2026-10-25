@@ -1,84 +1,35 @@
-'use client'
-
-import Link from "next/link";
-import { motion, Variants } from "framer-motion";
-import { ImageCard } from "@/components/cards/image-card";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXTwitter, faLinkedinIn, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { HeroActions, ProofStrip, delay } from "../_components/hero-parts";
 
-const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-}
-
-const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-}
-
-const socialLinks = [
-    { href: 'https://github.com/MIKEGUIJARRO', icon: faGithub, label: 'GitHub' },
-    { href: 'https://www.linkedin.com/in/miguel-alejandro-guijarro-mart%C3%ADnez-6a2997180/', icon: faLinkedinIn, label: 'LinkedIn' },
-    { href: 'https://x.com/mikeguijarro', icon: faXTwitter, label: 'X' },
+const facts = [
+    { term: 'Currently', detail: 'Building Smartops in Mexico City', className: 'sm:col-span-3 lg:col-span-2' },
+    { term: 'Previously', detail: 'Nearly two years at Amazon, across AWS and Kindle', className: 'sm:col-span-5 lg:col-span-4' },
+    { term: 'Citizenship', detail: 'US and Mexican', className: 'sm:col-span-3 lg:col-span-2' },
 ]
 
-const techBadges = ['AWS', 'Kubernetes', 'Terraform', 'Docker', 'Linux']
-
+// After rachelchen.tech: one serif sentence, then a quiet Currently / Previously row.
+// Rows are spaced explicitly on the 8px rhythm: sentence → facts 40px, facts → actions 40px,
+// actions → proof 64px.
 export function HeroSection() {
     return (
-        <div className="min-h-screen flex flex-col lg:flex-row justify-center items-center gap-12 py-20">
-            <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={containerVariants}
-                className="flex flex-col items-center gap-4">
-                <motion.div variants={itemVariants}>
-                    <div className="w-56 h-72 rounded-3xl overflow-hidden shadow-sm border border-slate-200">
-                        <ImageCard alt="Miguel Guijarro" src="/profile_pic.jpeg" />
-                    </div>
-                </motion.div>
-                <motion.div variants={itemVariants} className="flex gap-2">
-                    {socialLinks.map(({ href, icon, label }) => (
-                        <Link
-                            key={label}
-                            href={href}
-                            target="_blank"
-                            aria-label={label}
-                            className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
-                            <FontAwesomeIcon icon={icon} />
-                        </Link>
-                    ))}
-                </motion.div>
-            </motion.div>
-            <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={containerVariants}
-                className="space-y-6 w-full max-w-lg text-center lg:text-start">
-                <motion.div variants={itemVariants}>
-                    <p className="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-3">
-                        SRE / DevOps Engineer
-                    </p>
-                    <h1 className="text-6xl lg:text-8xl font-bold uppercase leading-none">
-                        Miguel<br />Guijarro
-                    </h1>
-                </motion.div>
-                <motion.p variants={itemVariants} className="text-lg text-slate-600 leading-relaxed">
-                    Nearly two years at Amazon resolving EKS and ECS production incidents and owning the infrastructure behind Kindle&apos;s print publishing. US and Mexican citizen, open to US-remote SRE and DevOps roles.
-                </motion.p>
+        <section aria-labelledby="hero-name" className="grid grid-cols-1 md:grid-cols-content md:gap-x-4">
+            <h1 id="hero-name" className="settle type-statement md:col-span-8" style={delay(0)}>
+                Miguel Guijarro is an SRE <br className="hidden md:inline" />
+                who builds for fun.
+            </h1>
 
-                <motion.div variants={itemVariants} className="flex flex-wrap gap-2 justify-center lg:justify-start">
-                    {techBadges.map(tech => (
-                        <span
-                            key={tech}
-                            className="px-3 py-1 text-sm font-medium bg-slate-100 rounded-full border border-slate-200 text-slate-700">
-                            {tech}
-                        </span>
-                    ))}
-                </motion.div>
-            </motion.div>
-        </div>
+            <dl className="settle mt-10 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-content md:col-span-8" style={delay(120)}>
+                {facts.map(({ term, detail, className }) => (
+                    <div key={term} className={cn("flex flex-col gap-1", className)}>
+                        <dt className="text-ui text-muted">{term}</dt>
+                        <dd className="text-ui">{detail}</dd>
+                    </div>
+                ))}
+            </dl>
+
+            <HeroActions className="settle mt-10 md:col-span-8" style={delay(180)} />
+
+            <ProofStrip className="settle mt-16 md:col-span-8" style={delay(240)} />
+        </section>
     )
 }

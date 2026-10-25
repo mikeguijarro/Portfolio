@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { ArchitectureDiagram } from "./_components/architecture-diagram";
+import { CaseStudyCover } from "./_components/cover";
+import { CASE_STUDY_STATS, CASE_STUDY_TITLE } from "./content";
+import { cn } from "@/lib/utils";
+import { StatStrip } from "@/components/stat-strip";
+import { BackLink, MobileBar, RailLeft, RailRight } from "../../(landing)/_components/site-rails";
+import { SectionHeading, sectionClassName } from "../../(landing)/_components/section-heading";
+import { ContactSection, SiteFooter } from "../../(landing)/_sections/footer";
+import { EMAIL, GITHUB_HREF, TSection } from "../../(landing)/contact";
 
 export const metadata: Metadata = {
     title: "Case study: Multi-tenant manufacturing platform | Miguel Guijarro",
@@ -10,12 +16,11 @@ export const metadata: Metadata = {
 
 const stack = ['NestJS', 'PostgreSQL 18', 'Redis', 'BullMQ', 'AWS S3', 'Docker', 'nginx', 'React PWA']
 
-// Counted from the repository.
-const stats = [
-    { value: '123', label: 'API operations' },
-    { value: '38', label: 'Row-level security policies' },
-    { value: '1,300+', label: 'Automated tests, 3 tiers' },
-    { value: '19', label: 'Versioned DB migrations' },
+// Same treatment as the hero's Currently / Previously row.
+const facts = [
+    { term: 'Role', detail: 'Architect and lead engineer' },
+    { term: 'Status', detail: '2026 · Preparing first production rollout' },
+    { term: 'Scope', detail: 'API, data model, containers, web app' },
 ]
 
 // Numbered to match the badges in the architecture diagram.
@@ -66,139 +71,152 @@ const roadmap = [
     'Automated backups with a tested restore, and runbooks',
 ]
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
-    return (
-        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-4 print:mb-1 print:text-[10px]">
-            {children}
-        </h2>
-    )
-}
+const CASE_SECTIONS: TSection[] = [
+    { id: 'architecture', label: 'Architecture' },
+    { id: 'decisions', label: 'Decisions' },
+    { id: 'testing', label: 'Testing' },
+    { id: 'rollout', label: 'Rollout' },
+    { id: 'contact', label: 'Contact' },
+]
 
+// The homepage's section rhythm, tightened for print.
+const caseSectionClassName = cn(sectionClassName, "print:gap-1 print:border-0 print:pt-2")
+const printTitleClassName = "print:text-[14px]"
+
+// Two-digit index shared by the decisions and the roadmap.
+const index = (i: number) => String(i + 1).padStart(2, '0')
+
+// Same 12-column frame, rails and section system as the landing page, so the hero's main button
+// lands somewhere familiar; the page ends on Contact instead of a dead end. Rails, contact and
+// footer drop out in print.
 export default function ManufacturingPlatformCaseStudy() {
     return (
-        <main className="container max-w-5xl py-16 space-y-16 print:max-w-none print:px-0 print:py-0 print:space-y-2 print:text-[10px] print:[zoom:0.8]">
-            <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 print:hidden">
-                <ArrowLeft className="w-4 h-4" />
-                Back to portfolio
-            </Link>
+        <div className="mx-auto grid w-full max-w-frame grid-cols-frame gap-x-4 px-4 xl:px-6 print:block print:max-w-none print:px-0">
+            <RailLeft sections={CASE_SECTIONS}>
+                <BackLink />
+            </RailLeft>
 
-            <header className="space-y-6 print:space-y-1.5">
-                <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest print:text-[10px]">
-                    Case study · Platform architecture &amp; reliability
-                </p>
-                <h1 className="text-4xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-balance print:text-2xl">
-                    Multi-tenant SaaS for machining job shops
-                </h1>
-                <p className="text-xl font-medium text-slate-900 max-w-3xl print:max-w-none print:text-[12px] print:leading-snug">
-                    Designed the architecture: database-enforced tenant isolation, a stateless API that scales
-                    horizontally, and 1,300+ tests against real Postgres and Redis.
-                </p>
-                <p className="text-base text-slate-600 leading-relaxed max-w-3xl print:max-w-none print:text-[10.5px]">
-                    A production-tracking platform for CNC machining shops: from purchase order through plant-floor work
-                    orders to shipping and invoicing. Built at Smartops; a machining shop in Mexico is the first tenant,
-                    and every new client runs as an isolated tenant.
-                </p>
-                <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm print:grid-cols-3 print:gap-2 print:text-[10px]">
-                    <div>
-                        <dt className="text-slate-500">Role</dt>
-                        <dd className="font-medium">Architect and lead engineer</dd>
-                    </div>
-                    <div>
-                        <dt className="text-slate-500">Status</dt>
-                        <dd className="font-medium">2026 · Preparing first production rollout</dd>
-                    </div>
-                    <div>
-                        <dt className="text-slate-500">Scope</dt>
-                        <dd className="font-medium">API, data model, containers, web app</dd>
-                    </div>
-                </dl>
-                <div className="flex flex-wrap gap-2">
-                    {stack.map(tech => (
-                        <span
-                            key={tech}
-                            className="px-3 py-1 text-sm font-medium bg-slate-100 rounded-full border border-slate-200 text-slate-700 print:text-[10px] print:py-0.5">
-                            {tech}
-                        </span>
-                    ))}
+            <main className="col-span-12 row-start-1 flex min-w-0 flex-col gap-20 pb-24 lg:col-span-8 lg:col-start-3 lg:gap-24 lg:pb-32 lg:pt-content-start print:max-w-none print:gap-2 print:px-0 print:py-0 print:text-[10px] print:[zoom:0.8]">
+                {/* The page's opening, spaced like the homepage hero: cover → header 64px,
+                    header → stats 64px. */}
+                <div>
+                    <MobileBar sections={CASE_SECTIONS}>
+                        <BackLink />
+                    </MobileBar>
+
+                    <CaseStudyCover />
+
+                    <header className="mt-16 space-y-6 print:mt-0 print:space-y-1.5">
+                        <p className="text-label print:text-[10px]">
+                            Case study · Platform architecture &amp; reliability
+                        </p>
+                        <h1 className="type-h1 print:text-2xl">
+                            {CASE_STUDY_TITLE}
+                        </h1>
+                        <p className="type-lead max-w-[32em] text-ink print:max-w-none print:text-[12px] print:leading-snug">
+                            Designed the architecture: database-enforced tenant isolation, a stateless API that scales
+                            horizontally, and 1,300+ tests against real Postgres and Redis.
+                        </p>
+                        <p className="max-w-measure text-body text-muted print:max-w-none print:text-[10.5px]">
+                            A production-tracking platform for CNC machining shops: from purchase order through plant-floor work
+                            orders to shipping and invoicing. Built at Smartops; a machining shop in Mexico is the first tenant,
+                            and every new client runs as an isolated tenant.
+                        </p>
+                        <dl className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3 print:grid-cols-3 print:gap-2">
+                            {facts.map(({ term, detail }) => (
+                                <div key={term} className="flex flex-col gap-1">
+                                    <dt className="text-ui text-muted print:text-[10px]">{term}</dt>
+                                    <dd className="text-ui print:text-[10px]">{detail}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                        <p className="font-mono text-meta text-muted print:text-[10px]">{stack.join(' · ')}</p>
+                        {/* Byline for the printed version; on screen the rails and footer carry it. */}
+                        <p className="hidden text-ui text-muted print:block print:text-[10px]">
+                            <span className="font-medium text-ink">Miguel Guijarro</span>
+                            {' · SRE / DevOps Engineer · '}
+                            <a href={`mailto:${EMAIL}`} className="link-quiet">{EMAIL}</a>
+                            {' · '}
+                            <a href={GITHUB_HREF} target="_blank" rel="noopener noreferrer" className="link-quiet">github.com/MIKEGUIJARRO</a>
+                        </p>
+                    </header>
+
+                    <StatStrip stats={CASE_STUDY_STATS} className="mt-16 print:mt-2" />
                 </div>
-                <p className="text-sm text-slate-600 print:text-[10px]">
-                    <span className="font-semibold text-slate-900">Miguel Guijarro</span>
-                    {' · SRE / DevOps Engineer · '}
-                    <a href="mailto:mikeguijarrodev@gmail.com" className="underline underline-offset-2 hover:text-slate-900">mikeguijarrodev@gmail.com</a>
-                    {' · '}
-                    <a href="https://github.com/MIKEGUIJARRO" target="_blank" className="underline underline-offset-2 hover:text-slate-900">github.com/MIKEGUIJARRO</a>
-                </p>
-            </header>
 
-            <dl className="grid grid-cols-2 lg:grid-cols-4 gap-4 print:grid-cols-4 print:gap-2">
-                {stats.map(({ value, label }) => (
-                    <div key={label} className="flex flex-col-reverse justify-end border border-slate-200 rounded-2xl p-4 sm:p-6 print:p-2">
-                        <dt className="text-sm text-slate-500 leading-snug mt-1 print:mt-0 print:text-[10px]">{label}</dt>
-                        <dd className="text-3xl sm:text-4xl font-bold tabular-nums tracking-tight print:text-lg">{value}</dd>
-                    </div>
-                ))}
-            </dl>
-
-            <section>
-                <SectionLabel>Architecture</SectionLabel>
-                <div className="border border-slate-200 rounded-2xl p-4 sm:p-6 print:p-1">
-                    <div className="print:max-w-[50%] print:mx-auto">
-                        <ArchitectureDiagram />
-                    </div>
-                    <p className="text-xs text-slate-500 mt-4 print:mt-0 print:text-[9px] text-center">
-                        Numbered badges match the reliability decisions below. Dashed line: optional dependency.
-                    </p>
-                </div>
-            </section>
-
-            <section>
-                <SectionLabel>Reliability decisions</SectionLabel>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 print:grid-cols-2 print:gap-2">
-                    {decisions.map(({ title, what, why }, i) => (
-                        <article key={title} className="border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-3 print:p-2 print:space-y-1 break-inside-avoid">
-                            <div className="flex items-baseline gap-3">
-                                <span className="text-xs font-semibold text-slate-500 tabular-nums">0{i + 1}</span>
-                                <h3 className="font-bold text-lg print:text-[12px]">{title}</h3>
+                <section id="architecture" aria-labelledby="architecture-title" className={caseSectionClassName}>
+                    <SectionHeading id="architecture-title" className={printTitleClassName}>Architecture</SectionHeading>
+                    {/* The homepage tiles' frame and caption: hairline media, caption underneath. */}
+                    <figure className="flex flex-col gap-2.5">
+                        <div className="media-frame p-4 sm:p-6 print:p-1">
+                            <div className="print:mx-auto print:max-w-[50%]">
+                                <ArchitectureDiagram />
                             </div>
-                            <p className="text-sm font-medium text-slate-900 leading-relaxed print:text-[10.5px] print:leading-snug">{why}</p>
-                            <p className="text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 print:pt-1 print:text-[10.5px] print:leading-snug">{what}</p>
-                        </article>
-                    ))}
-                </div>
-            </section>
+                        </div>
+                        <figcaption className="text-ui text-muted print:text-[9px]">
+                            Numbered badges match the reliability decisions below. Dashed line: optional dependency.
+                        </figcaption>
+                    </figure>
+                </section>
 
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 print:grid-cols-2 print:gap-4 print:break-inside-avoid">
-                <div>
-                    <SectionLabel>Testing against real infrastructure</SectionLabel>
-                    <ul className="space-y-3 print:space-y-1">
+                <section id="decisions" aria-labelledby="decisions-title" className={caseSectionClassName}>
+                    <SectionHeading id="decisions-title" className={printTitleClassName}>Reliability decisions</SectionHeading>
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-10 md:grid-cols-2 print:grid-cols-2 print:gap-2">
+                        {decisions.map(({ title, what, why }, i) => (
+                            <article key={title} className="break-inside-avoid space-y-3 border-t border-rule pt-4 print:space-y-1 print:pt-1">
+                                <div className="flex items-baseline gap-3">
+                                    <span className="font-mono text-meta tabular-nums text-muted">{index(i)}</span>
+                                    <h3 className="type-h3 print:text-[12px]">{title}</h3>
+                                </div>
+                                <p className="text-body font-medium text-ink print:text-[10.5px] print:leading-snug">{why}</p>
+                                <p className="text-ui text-muted print:text-[10.5px] print:leading-snug">{what}</p>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+
+                <section id="testing" aria-labelledby="testing-title" className={cn(caseSectionClassName, "print:break-inside-avoid")}>
+                    <SectionHeading
+                        id="testing-title"
+                        className={printTitleClassName}
+                        description="Disposable Postgres 18 and Redis run in Docker Compose with health checks; the test database is dropped and rebuilt from the migrations on every run.">
+                        Testing against real infrastructure
+                    </SectionHeading>
+                    {/* The Skills section's ruled rows. */}
+                    <dl>
                         {testTiers.map(({ tier, files, detail }) => (
-                            <li key={tier} className="flex gap-4 border-b border-slate-200 pb-3 print:pb-1">
-                                <span className="font-bold w-28 shrink-0 print:w-20">{tier}</span>
-                                <span className="text-sm text-slate-600 print:text-[10.5px]">
-                                    <span className="font-medium text-slate-900">{files}.</span> {detail}
-                                </span>
+                            <div key={tier} className="grid gap-x-4 gap-y-1 border-t border-rule py-4 md:grid-cols-content md:items-baseline md:py-5 print:py-1">
+                                <dt className="text-ui text-muted md:col-span-3 lg:col-span-2 print:text-[10.5px]">{tier}</dt>
+                                <dd className="text-ink md:col-span-5 lg:col-span-6 print:text-[10.5px]">
+                                    <span className="tabular-nums">{files}.</span> {detail}
+                                </dd>
+                            </div>
+                        ))}
+                    </dl>
+                </section>
+
+                <section id="rollout" aria-labelledby="rollout-title" className={cn(caseSectionClassName, "print:break-inside-avoid")}>
+                    <SectionHeading id="rollout-title" className={printTitleClassName}>Next: production rollout</SectionHeading>
+                    <ol>
+                        {roadmap.map((item, i) => (
+                            <li key={item} className="flex items-baseline gap-3 border-t border-rule py-4 md:py-5 print:py-1">
+                                <span className="font-mono text-meta tabular-nums text-muted">{index(i)}</span>
+                                <span className="text-ink print:text-[10.5px]">{item}</span>
                             </li>
                         ))}
-                    </ul>
-                    <p className="text-sm text-slate-600 mt-4 leading-relaxed print:mt-1 print:text-[10px]">
-                        Disposable Postgres 18 and Redis run in Docker Compose with health checks; the test database is
-                        dropped and rebuilt from the migrations on every run.
-                    </p>
-                </div>
-                <div>
-                    <SectionLabel>Next: production rollout</SectionLabel>
-                    <ul className="space-y-3 print:space-y-1">
-                        {roadmap.map(item => (
-                            <li key={item} className="flex gap-3 text-sm print:text-[10.5px]">
-                                <span className="mt-1.5 w-2 h-2 rounded-full border-2 border-slate-400 shrink-0" />
-                                <span className="text-slate-600">{item}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </section>
-        </main>
+                    </ol>
+                </section>
+
+                <section id="contact" aria-labelledby="contact-title" className={cn(sectionClassName, "print:hidden")}>
+                    <ContactSection />
+                </section>
+            </main>
+
+            <RailRight />
+
+            <footer className="col-span-12 print:hidden">
+                <SiteFooter />
+            </footer>
+        </div>
     )
 }

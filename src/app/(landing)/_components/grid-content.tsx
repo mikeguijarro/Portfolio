@@ -1,70 +1,44 @@
 
 import { withTitle } from "@/components/cards/with-title"
-import { withLink } from "@/components/cards/with-link"
 
+import { FeatureCard } from "@/components/cards/feature-card"
 import { ImageCard } from "@/components/cards/image-card"
+import { LinkCard } from "@/components/cards/link-card"
+import { PanelLink } from "@/components/cards/panel-link"
 import { VideoCard } from "@/components/cards/video-card"
 
 import { IProjectGridContent } from "../types"
 
-const VideoCardWithTitle = withTitle(VideoCard)
-const VideoCardWithTitleWithLink = withLink(VideoCardWithTitle)
-
-
 const ImageCardWithTitle = withTitle(ImageCard)
-const ImageCardWithTitleWithLink = withLink(ImageCardWithTitle)
+const VideoCardWithTitle = withTitle(VideoCard)
+const PanelLinkWithTitle = withTitle(PanelLink)
 
-export const GridContent = ({ id, type, data }: Omit<IProjectGridContent, 'isDragging'>) => {
+// Internal pages open in place; everything else opens in a new tab.
+const targetFor = (href?: string) => href?.startsWith('/') ? undefined : '_blank'
 
-    const renderGridContent = () => {
-        switch (data.type) {
-            case 'image':
-                if (data.href) {
-                    return (
-                        <ImageCardWithTitleWithLink
-                            title={data.title}
-                            href={data.href}
-                            target="_blank"
-                            src={data.src}
-                            alt={data.alt}
-                            isScaleHover={true}
-                        />
-                    )
-                }
-                return (
-                    <ImageCardWithTitle
-                        title={data.title}
-                        src={data.src}
-                        alt={data.alt}
-                        isScaleHover={true}
-                    />
-                )
+export const GridContent = ({ data }: Omit<IProjectGridContent, 'isDragging'>) => {
+    const target = targetFor(data.href)
+    const caption = { title: data.title, meta: data.meta, href: data.href, target }
 
-            case 'video':
-                if (data.href) {
-                    return (
-                        <VideoCardWithTitleWithLink
-                            title={data.title}
-                            href={data.href}
-                            target="_blank"
-                            src={data.src}
-                        />
-                    )
-                }
-                return (
-                    <VideoCardWithTitle
-                        title={data.title}
-                        src={data.src}
-                    />
-                )
-            default:
-                return <>Unsupported media type</>
-        }
+    switch (data.type) {
+        case 'image':
+            return <ImageCardWithTitle {...caption} src={data.src} alt={data.alt} isScaleHover={true} lightboxCaption={data.title} lightboxMeta={data.meta} />
+        case 'video':
+            return <VideoCardWithTitle {...caption} src={data.src} />
+        case 'feature':
+            // Typographic panels are clickable as a whole, so they always need a link.
+            return (
+                <PanelLinkWithTitle {...caption} panelHref={data.href ?? '#'} panelTarget={target}>
+                    <FeatureCard eyebrow={data.eyebrow} headline={data.headline} stats={data.stats} tone={data.tone} />
+                </PanelLinkWithTitle>
+            )
+        case 'link':
+            return (
+                <PanelLinkWithTitle {...caption} panelHref={data.href} panelTarget={target}>
+                    <LinkCard eyebrow={data.eyebrow} headline={data.headline} tone={data.tone} />
+                </PanelLinkWithTitle>
+            )
+        default:
+            return <>Unsupported media type</>
     }
-
-    return (
-        <>
-            {renderGridContent()}
-        </>
-    )
 }

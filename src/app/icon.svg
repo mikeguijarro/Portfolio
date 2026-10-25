@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon: the apricot mesh gradient from the case-study panel (.gradient-apricot), as a circle. -->
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E9B47C"/>
+      <stop offset="0.5" stop-color="#E6A872"/>
+      <stop offset="1" stop-color="#EBC0A9"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.42" cy="0.38" r="0.55">
+      <stop offset="0" stop-color="#EAA86C"/>
+      <stop offset="1" stop-color="#EAA86C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lilac" cx="0.12" cy="0.92" r="0.6">
+      <stop offset="0" stop-color="#D8B6CC"/>
+      <stop offset="1" stop-color="#D8B6CC" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet" cx="0.92" cy="0.1" r="0.55">
+      <stop offset="0" stop-color="#C9B6D4"/>
+      <stop offset="1" stop-color="#C9B6D4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rose" cx="0.88" cy="0.74" r="0.5">
+      <stop offset="0" stop-color="#F0C2BF"/>
+      <stop offset="1" stop-color="#F0C2BF" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="disc">
+      <circle cx="32" cy="32" r="30"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#disc)">
+    <rect width="64" height="64" fill="url(#base)"/>
+    <rect width="64" height="64" fill="url(#warm)"/>
+    <rect width="64" height="64" fill="url(#lilac)"/>
+    <rect width="64" height="64" fill="url(#violet)"/>
+    <rect width="64" height="64" fill="url(#rose)"/>
+  </g>
+</svg>

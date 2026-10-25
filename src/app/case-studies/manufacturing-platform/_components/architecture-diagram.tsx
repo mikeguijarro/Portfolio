@@ -82,8 +82,8 @@ const narrow: TLayout = {
 function Badge({ x, y, n, onDark }: { x: number, y: number, n: number, onDark?: boolean }) {
     return (
         <g>
-            <circle cx={x} cy={y} r={10} fill={onDark ? '#ffffff' : '#0f172a'} />
-            <text x={x} y={y + 4} fontSize="11" fontWeight="700" textAnchor="middle" fill={onDark ? '#0f172a' : '#ffffff'}>
+            <circle cx={x} cy={y} r={10} className={onDark ? 'fill-paper' : 'fill-ink'} />
+            <text x={x} y={y + 4} fontSize="11" fontWeight="500" textAnchor="middle" className={onDark ? 'fill-ink' : 'fill-paper'}>
                 {n}
             </text>
         </g>
@@ -107,13 +107,13 @@ function Diagram({ layout, className }: { layout: TLayout, className: string }) 
             </desc>
             <defs>
                 <marker id={marker} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                    <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8" />
+                    <path d="M0 0 L10 5 L0 10 z" className="fill-muted" />
                 </marker>
             </defs>
             {layout.group && (
                 <g>
-                    <rect x={layout.group.x} y={layout.group.y} width={layout.group.w} height={layout.group.h} rx={18} fill="#f8fafc" stroke="#e2e8f0" />
-                    <text x={layout.group.x + 14} y={layout.group.y + 22} fontSize="11" fontWeight="600" letterSpacing="1.5" fill="#64748b">
+                    <rect x={layout.group.x} y={layout.group.y} width={layout.group.w} height={layout.group.h} rx={6} className="fill-paper stroke-rule" />
+                    <text x={layout.group.x + 14} y={layout.group.y + 22} fontSize="11" fontWeight="500" letterSpacing="0.08em" className="fill-muted font-mono">
                         {layout.group.label.toUpperCase()}
                     </text>
                 </g>
@@ -125,7 +125,7 @@ function Diagram({ layout, className }: { layout: TLayout, className: string }) 
                     y1={from[1]}
                     x2={to[0]}
                     y2={to[1]}
-                    stroke="#94a3b8"
+                    className="stroke-muted"
                     strokeWidth="1.5"
                     strokeDasharray={dashed ? '4 3' : undefined}
                     markerEnd={`url(#${marker})`} />
@@ -134,8 +134,8 @@ function Diagram({ layout, className }: { layout: TLayout, className: string }) 
                 <g key={node.title}>
                     {node.stacked && (
                         <>
-                            <rect x={node.x + 8} y={node.y - 8} width={node.w} height={node.h} rx={14} fill="#f1f5f9" stroke="#cbd5e1" />
-                            <rect x={node.x + 4} y={node.y - 4} width={node.w} height={node.h} rx={14} fill="#f8fafc" stroke="#cbd5e1" />
+                            <rect x={node.x + 8} y={node.y - 8} width={node.w} height={node.h} rx={6} className="fill-paper stroke-rule" />
+                            <rect x={node.x + 4} y={node.y - 4} width={node.w} height={node.h} rx={6} className="fill-surface stroke-rule" />
                         </>
                     )}
                     <rect
@@ -143,14 +143,13 @@ function Diagram({ layout, className }: { layout: TLayout, className: string }) 
                         y={node.y}
                         width={node.w}
                         height={node.h}
-                        rx={14}
-                        fill={node.dark ? '#0f172a' : '#ffffff'}
-                        stroke={node.dark ? '#0f172a' : '#cbd5e1'} />
-                    <text x={node.x + 16} y={node.y + 26} fontSize="15" fontWeight="700" fill={node.dark ? '#f8fafc' : '#0f172a'}>
+                        rx={6}
+                        className={node.dark ? 'fill-ink stroke-ink' : 'fill-surface stroke-rule'} />
+                    <text x={node.x + 16} y={node.y + 26} fontSize="15" fontWeight="500" className={node.dark ? 'fill-paper' : 'fill-ink'}>
                         {node.title}
                     </text>
                     {node.lines.map((line, i) => (
-                        <text key={line} x={node.x + 16} y={node.y + 48 + i * 19} fontSize="12.5" fill={node.dark ? '#cbd5e1' : '#475569'}>
+                        <text key={line} x={node.x + 16} y={node.y + 48 + i * 19} fontSize="12.5" className={node.dark ? 'fill-paper/70' : 'fill-muted'}>
                             {line}
                         </text>
                     ))}
